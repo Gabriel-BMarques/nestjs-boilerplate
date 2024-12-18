@@ -6,7 +6,7 @@ import {
 } from '@nestjs/platform-fastify';
 import * as cors from 'cors';
 import { config } from './config';
-import { initSentryIo } from './observability/sentry.provider';
+import { initSentryIo } from './infrastructure/observability/sentry.provider';
 import { database } from 'knexfile';
 
 async function bootstrap() {
