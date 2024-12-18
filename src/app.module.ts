@@ -3,9 +3,13 @@ import { AuthGuard } from './auth/auth.guard';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
 import { AwardsIntervalsModule } from './components/Movie/AwardsIntervals/AwardsIntervals.module';
+import { DatabaseModule } from './infrastructure/database/database.module';
 
 @Module({
-  imports: [AwardsIntervalsModule],
+  imports: [
+    DatabaseModule,
+    AwardsIntervalsModule
+  ],
   controllers: [],
   providers: [
     JwtService,

@@ -5,6 +5,7 @@ import {
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
 import * as cors from 'cors';
+import { onStart } from './on-start';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -16,6 +17,7 @@ async function bootstrap() {
 
   app.use(cors());
 
+  await onStart();
   await app.listen(3000);
 }
 bootstrap();

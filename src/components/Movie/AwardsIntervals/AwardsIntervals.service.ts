@@ -9,9 +9,7 @@ export class AwardsIntervalsService {
     ) {}
 
     async execute(): Promise<AwardsIntervals | any> {
-        const movies = await this.movieRepository.find({
-            winner: true
-        });
+        const movies = await this.movieRepository.listAll();
 
         return movies;
     }
