@@ -2,10 +2,10 @@ import { Module } from '@nestjs/common';
 import { AuthGuard } from './auth/auth.guard';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
-import { CreateUserModule } from './components/User/CreateUser/CreateUser.module';
+import { AwardsIntervalsModule } from './components/Movie/AwardsIntervals/AwardsIntervals.module';
 
 @Module({
-  imports: [CreateUserModule],
+  imports: [AwardsIntervalsModule],
   controllers: [],
   providers: [
     JwtService,
