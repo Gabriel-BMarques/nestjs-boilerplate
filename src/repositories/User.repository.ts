@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { database } from 'knexfile';
-import { User } from 'src/entities/User.entity';
+import { User } from 'src/infrastructure/entities/User.entity';
 
 export interface IUserRepository {
   create(payload: User): Promise<User>;
