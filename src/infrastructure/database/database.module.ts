@@ -5,10 +5,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     imports: [
         TypeOrmModule.forRoot({
           type: 'sqlite',
-          database: ':memory:', // Banco de dados em memória
-          entities: [__dirname + '/**/*.entity{.ts,.js}'], // Localize suas entidades
-          synchronize: true, // Sincroniza o banco com as entidades automaticamente
-          logging: true, // Opcional: log para depuração
+          database: ':memory:',
+          entities: [__dirname + '/**/*.entity{.ts,.js}'],
+          synchronize: true,
+          logging: true,
         }),
       ]
 })
