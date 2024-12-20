@@ -1,0 +1,14 @@
+services:
+  app:
+    container_name: outsera-challenge
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/usr/app
+
+volumes:
+  pgdata: {}
+  redisdata: {}
