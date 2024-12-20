@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { MovieRepository } from 'src/infrastructure/repositories/Movie.repository';
+import { MovieRepository } from 'src/infrastructure/repositories/Movie/Movie.repository';
 import { AwardsIntervals } from 'src/infrastructure/responses/models/AwardsIntervals.model';
 
 @Injectable()

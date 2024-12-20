@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Movie } from '../entities/Movie.entity';
+import { Movie } from '../../entities/Movie.entity';
 
 @Injectable()
 export class MovieRepository {
@@ -22,7 +22,10 @@ export class MovieRepository {
   }
 
   async listAll(): Promise<Movie[]> {
-    return this.repository.find();
+    const result = await this.repository.find();
+    console.log(result);
+
+    return result;
   }
 
 }

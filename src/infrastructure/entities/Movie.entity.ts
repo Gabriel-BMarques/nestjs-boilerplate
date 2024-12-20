@@ -15,7 +15,7 @@ export class Movie {
   studios: string;
 
   @Column()
-  producer: string;
+  producers: string;
 
   @Column()
   winner: boolean;

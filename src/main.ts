@@ -5,7 +5,8 @@ import {
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
 import * as cors from 'cors';
-import { onStart } from './on-start';
+import { populateDatabase } from './on-start';
+import { MovieRepository } from './infrastructure/repositories/Movie/Movie.repository';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -17,7 +18,9 @@ async function bootstrap() {
 
   app.use(cors());
 
-  await onStart();
+  const movieRepository = app.get(MovieRepository);
+  await populateDatabase(movieRepository);
+
   await app.listen(3000);
 }
 bootstrap();
