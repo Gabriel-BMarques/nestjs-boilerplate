@@ -1,19 +1,13 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class Movie {
+export class MovieProducer {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
-  year: number;
+  movie_id: number;
 
   @Column()
-  title: string;
-
-  @Column()
-  studios: string;
-
-  @Column()
-  winner: boolean;
+  producer_id: number;
 }

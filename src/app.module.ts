@@ -2,6 +2,8 @@ import { Module } from '@nestjs/common';
 import { AwardsIntervalsModule } from './components/Movie/AwardsIntervals/AwardsIntervals.module';
 import { MovieModule } from './infrastructure/repositories/Movie/Movie.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ProducerModule } from './infrastructure/repositories/Producer/Producer.module';
+import { MovieProducerModule } from './infrastructure/repositories/MovieProducer/MovieProducer.module';
 
 @Module({
   imports: [
@@ -13,7 +15,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       logging: true,
     }),
     AwardsIntervalsModule,
-    MovieModule
+    MovieModule,
+    ProducerModule,
+    MovieProducerModule
   ],
   controllers: [],
   providers: [],

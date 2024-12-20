@@ -7,6 +7,27 @@ import {
 import * as cors from 'cors';
 import { populateDatabase } from './on-start';
 import { MovieRepository } from './infrastructure/repositories/Movie/Movie.repository';
+import { ProducerRepository } from './infrastructure/repositories/Producer/Producer.repository';
+import { MovieProducerRepository } from './infrastructure/repositories/MovieProducer/MovieProducer.repository';
+
+async function onInit(app: NestFastifyApplication) {
+  const [
+    movieRepository,
+    producerRepository,
+    movieProducerRepository
+  ] = [
+    app.get(MovieRepository),
+    app.get(ProducerRepository),
+    app.get(MovieProducerRepository)
+  ];
+
+  await populateDatabase(
+    movieRepository,
+    producerRepository,
+    movieProducerRepository
+  );
+
+}
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -16,10 +37,9 @@ async function bootstrap() {
     }),
   );
 
-  app.use(cors());
+  await onInit(app);
 
-  const movieRepository = app.get(MovieRepository);
-  await populateDatabase(movieRepository);
+  app.use(cors());
 
   await app.listen(3000);
 }

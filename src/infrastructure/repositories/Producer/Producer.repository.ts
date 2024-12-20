@@ -1,28 +1,28 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Movie } from '../../entities/Movie.entity';
+import { Producer } from 'src/infrastructure/entities/Producer.entity';
 
 @Injectable()
-export class MovieRepository {
+export class ProducerRepository {
   constructor(
-    @InjectRepository(Movie)
-    private repository: Repository<Movie>,
+    @InjectRepository(Producer)
+    private repository: Repository<Producer>,
   ) {}
 
-  async create(movie: Partial<Movie>): Promise<Movie> {
+  async create(movie: Partial<Producer>): Promise<Producer> {
     const entity = this.repository.create(movie);
 
     return this.repository.save(entity);
   }
   
-  async find(query: Partial<Movie>): Promise<Movie[]> {
+  async find(query: Partial<Producer>): Promise<Producer[]> {
     return this.repository.find({
       where: query
     });
   }
 
-  async listAll(): Promise<Movie[]> {
+  async listAll(): Promise<Producer[]> {
     const result = await this.repository.find();
 
     return result;
