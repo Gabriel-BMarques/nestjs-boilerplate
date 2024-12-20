@@ -29,34 +29,68 @@
 ## Installation
 
 ```bash
-$ bun install
+$ npm install
 ```
 
 ## Running the app
 
 ```bash
 # development
-$ bun run start
+$ npm run start
 
 # watch mode
-$ bun run start:dev
+$ npm run start:dev
 
 # production mode
-$ bun run start:prod
+$ npm run start:prod
 ```
 
-## Test
+## Integration Tests
+
+To test the integration between the application and the in-memory database, you can manually send a GET request to the `/awards-intervals` endpoint to ensure that the API returns the expected data.
+
+### Example Request
 
 ```bash
-# unit tests
-$ bun run test
-
-# e2e tests
-$ bun run test:e2e
-
-# test coverage
-$ bun run test:cov
+curl -X GET http://localhost:3000/awards-intervals
 ```
+
+### Expected Response Format
+
+```json
+{
+  "min": [
+    {
+      "producer": "Producer 1",
+      "interval": 1,
+      "previousWin": 2008,
+      "followingWin": 2009
+    },
+    {
+      "producer": "Producer 2",
+      "interval": 1,
+      "previousWin": 2018,
+      "followingWin": 2019
+    }
+  ],
+  "max": [
+    {
+      "producer": "Producer 1",
+      "interval": 99,
+      "previousWin": 1900,
+      "followingWin": 1999
+    },
+    {
+      "producer": "Producer 2",
+      "interval": 99,
+      "previousWin": 2000,
+      "followingWin": 2099
+    }
+  ]
+}
+```
+
+Alternatively, use tools like Postman or any HTTP client library (e.g., Axios, fetch) to send the request and validate the response.
 
 ## Support
 
