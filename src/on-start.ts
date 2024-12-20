@@ -48,7 +48,11 @@ export async function populateDatabase(
 
         const createdMovie = await movieRepository.create(movie);
 
-        const producers: Partial<Producer>[] = extractProducerNames(values[headers.indexOf('producers')]).map(name => ({ name }));
+        const producers: Partial<Producer>[] = [
+            ...new Set(
+                extractProducerNames(values[headers.indexOf('producers')])
+            )
+        ].map(name => ({ name }));
 
         await Promise.all(producers.map(async producer => {
             const createdProducer = await producerRepository.create(producer);
