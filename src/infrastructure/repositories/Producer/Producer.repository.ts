@@ -22,8 +22,35 @@ export class ProducerRepository {
     });
   }
 
+  async findOne(query: Partial<Producer>): Promise<Producer> {
+    return this.repository.findOne({
+      where: query
+    });
+  }
+
   async listAll(): Promise<Producer[]> {
     const result = await this.repository.find();
+
+    return result;
+  }
+
+  async listProducerWithWinnerMovies(): Promise<Producer[]> {
+    const result = await this.repository
+      .find({
+        select: ['id', 'name'],
+        relations: ['movies'],
+        where: {
+          movies: {
+            winner: true
+          }
+        },
+        order: {
+          id: 'ASC',
+          movies: {
+            year: 'DESC'
+          },
+        }
+      })
 
     return result;
   }

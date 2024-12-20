@@ -1,4 +1,4 @@
-interface AwardsDetails {
+export interface AwardsDetails {
     producer: string;
     interval: number;
     previousWin: number;

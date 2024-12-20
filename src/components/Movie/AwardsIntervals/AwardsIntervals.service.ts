@@ -1,26 +1,49 @@
 import { Injectable } from '@nestjs/common';
-import { MovieRepository } from 'src/infrastructure/repositories/Movie/Movie.repository';
-import { MovieProducerRepository } from 'src/infrastructure/repositories/MovieProducer/MovieProducer.repository';
+import { Movie } from 'src/infrastructure/entities/Movie.entity';
+import { Producer } from 'src/infrastructure/entities/Producer.entity';
 import { ProducerRepository } from 'src/infrastructure/repositories/Producer/Producer.repository';
-import { AwardsIntervals } from 'src/infrastructure/responses/models/AwardsIntervals.model';
+import { AwardsDetails, AwardsIntervals } from 'src/infrastructure/responses/models/AwardsIntervals.model';
 
 @Injectable()
 export class AwardsIntervalsService {
     constructor(
-        private readonly movieRepository: MovieRepository,
         private readonly producerRepository: ProducerRepository,
-        private readonly movieProducerRepository: MovieProducerRepository
     ) {}
 
-    async execute(): Promise<AwardsIntervals | any> {
-        const movies = await this.movieRepository.listAll();
-        const producers = await this.producerRepository.listAll();
-        const movieProducers = await this.movieProducerRepository.listAll();
+    async execute(): Promise<AwardsIntervals> {
+        const producersWithMovies = await this.producerRepository.listProducerWithWinnerMovies();
+        const filteredProducers = producersWithMovies.filter(producer => producer.movies.length > 1);
 
-        return {
-            movies,
-            producers,
-            movieProducers
+        const awardsDetailsMatrix = filteredProducers.map((producer) => this.getAwardsDetails(producer, producer.movies));
+
+        const awardsDetails = awardsDetailsMatrix.flat().filter(interval => interval);
+
+        const { interval: minInterval } = awardsDetails.sort((a, b) => a.interval - b.interval)[0];
+        const { interval: maxInterval } = awardsDetails.sort((a, b) => b.interval - a.interval)[0];
+
+        const result: AwardsIntervals = {
+            min: awardsDetails.filter(interval => interval.interval === minInterval),
+            max: awardsDetails.filter(interval => interval.interval === maxInterval),
         };
+
+        return result;
+    }
+
+    private getAwardsDetails(producer: Producer, movies: Movie[]): AwardsDetails[] {
+        return movies.map((movie, index, movies) => {
+            if (index === 0) return null;
+
+            const prev = movies[index - 1];
+            const current = movie;
+
+            const interval = prev.year - current.year;
+
+            return {
+                producer: producer.name,
+                interval,
+                previousWin: current.year,
+                followingWin: prev.year,
+            }
+        });
     }
 }
